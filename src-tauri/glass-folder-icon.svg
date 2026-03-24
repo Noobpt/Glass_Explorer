@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="180" y1="120" x2="860" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F9FCFF"/>
+      <stop offset="0.45" stop-color="#EAF3FF"/>
+      <stop offset="1" stop-color="#D6E6FF"/>
+    </linearGradient>
+    <linearGradient id="panelGlow" x1="276" y1="190" x2="790" y2="830" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.14"/>
+    </linearGradient>
+    <linearGradient id="folderBack" x1="284" y1="308" x2="760" y2="754" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#CFE8FF" stop-opacity="0.92"/>
+      <stop offset="0.55" stop-color="#99CBFF" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#7AB6FF" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="folderFront" x1="266" y1="404" x2="780" y2="786" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.56"/>
+      <stop offset="0.22" stop-color="#C9E5FF" stop-opacity="0.52"/>
+      <stop offset="0.65" stop-color="#8BC2FF" stop-opacity="0.48"/>
+      <stop offset="1" stop-color="#6BAFFF" stop-opacity="0.62"/>
+    </linearGradient>
+    <radialGradient id="orbBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(756 314) rotate(122.6) scale(276 306)">
+      <stop stop-color="#94D6FF" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#94D6FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orbPink" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(302 796) rotate(-41.2) scale(254 232)">
+      <stop stop-color="#FFD9F6" stop-opacity="0.78"/>
+      <stop offset="1" stop-color="#FFD9F6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="110" y="100" width="804" height="846" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+      <feOffset dy="34"/>
+      <feGaussianBlur stdDeviation="34"/>
+      <feColorMatrix values="0 0 0 0 0.32549 0 0 0 0 0.466667 0 0 0 0 0.705882 0 0 0 0.2 0"/>
+      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+    <filter id="softBlur" x="172" y="184" width="684" height="584" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur result="effect1_foregroundBlur_1_1" stdDeviation="28"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="178" y="144" width="668" height="668" rx="176" fill="url(#bg)"/>
+    <rect x="180.5" y="146.5" width="663" height="663" rx="173.5" stroke="url(#panelGlow)" stroke-width="5"/>
+    <ellipse cx="722" cy="286" rx="176" ry="152" fill="url(#orbBlue)"/>
+    <ellipse cx="326" cy="748" rx="158" ry="122" fill="url(#orbPink)"/>
+
+    <g filter="url(#softBlur)">
+      <path
+        d="M286 358C286 330.386 308.386 308 336 308H470.248C485.739 308 500.347 315.184 509.807 327.438L533.354 357.946C538.085 364.077 545.389 367.678 553.132 367.678H690C717.614 367.678 740 390.063 740 417.678V444.538C740 472.153 717.614 494.538 690 494.538H336C308.386 494.538 286 472.153 286 444.538V358Z"
+        fill="url(#folderBack)"
+      />
+    </g>
+
+    <path
+      d="M252 436C252 399.549 281.549 370 318 370H446.88C460.354 370 473.227 375.66 482.365 385.598L518.198 424.565C527.336 434.503 540.209 440.163 553.683 440.163H706C742.451 440.163 772 469.712 772 506.163V646C772 689.078 737.078 724 694 724H330C286.922 724 252 689.078 252 646V436Z"
+      fill="url(#folderFront)"
+      stroke="rgba(255,255,255,0.72)"
+      stroke-width="6"
+    />
+
+    <path
+      d="M300 418C300 398.118 316.118 382 336 382H445.771C456.564 382 466.806 386.839 473.646 395.194L496.882 423.584C505.627 434.269 518.71 440.459 532.517 440.459H712"
+      stroke="rgba(255,255,255,0.8)"
+      stroke-linecap="round"
+      stroke-width="18"
+    />
+
+    <path
+      d="M314 520C327.309 478.6 362.603 452.085 405.952 452.085H702.649C727.466 452.085 745.117 476.22 737.625 499.879L703.963 606.158C694.299 636.662 666.007 657.424 634.01 657.424H325.942C298.446 657.424 278.84 630.812 287.333 604.66L314 520Z"
+      fill="rgba(255,255,255,0.26)"
+    />
+
+    <path
+      d="M324 470H672"
+      stroke="rgba(255,255,255,0.5)"
+      stroke-linecap="round"
+      stroke-width="10"
+    />
+
+    <circle cx="356" cy="300" r="76" fill="rgba(255,255,255,0.42)"/>
+    <circle cx="644" cy="664" r="104" fill="rgba(255,255,255,0.16)"/>
+  </g>
+</svg>

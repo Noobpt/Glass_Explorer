@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/* ─── Glass Design Tokens ─── */
+@theme {
+  --color-glass-bg: rgba(255, 255, 255, 0.06);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-glass-hover: rgba(255, 255, 255, 0.10);
+  --color-glass-active: rgba(255, 255, 255, 0.16);
+  --color-glass-surface: rgba(255, 255, 255, 0.04);
+  --color-accent: rgba(120, 180, 255, 0.7);
+  --color-accent-glow: rgba(120, 180, 255, 0.25);
+  --color-accent-soft: rgba(120, 180, 255, 0.12);
+}
+
+/* ─── Base ─── */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: white;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  /* Ensure white text stays readable on any background (transparent window) */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Liquid Glass: multi-layer effect ─── */
+@keyframes liquid-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer-move {
+  0% {
+    transform: translateX(-100%) rotate(-15deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(-15deg);
+  }
+}
+
+.liquid-glass {
+  position: relative;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.10) 0%,
+      rgba(255, 255, 255, 0.04) 20%,
+      rgba(120, 180, 255, 0.06) 40%,
+      rgba(180, 140, 255, 0.04) 60%,
+      rgba(255, 255, 255, 0.04) 80%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+  background-size: 400% 400%;
+  animation: liquid-shift 12s ease infinite;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Shimmer highlight layer */
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 60%
+  );
+  animation: shimmer-move 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Noise texture overlay for glass depth */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content sits above pseudo-layers */
+.liquid-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Drop zone glow ─── */
+@keyframes drop-pulse {
+  0%, 100% {
+    box-shadow: inset 0 0 20px rgba(120, 180, 255, 0.15), 0 0 12px rgba(120, 180, 255, 0.08);
+  }
+  50% {
+    box-shadow: inset 0 0 40px rgba(120, 180, 255, 0.25), 0 0 24px rgba(120, 180, 255, 0.15);
+  }
+}
+
+.drop-active {
+  animation: drop-pulse 1.5s ease infinite;
+  border-color: rgba(120, 180, 255, 0.3) !important;
+}
+
+/* ─── Entrance animation ─── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.3s ease-out both;
+}
+
+/* Staggered list items */
+.animate-stagger > * {
+  animation: fade-in-up 0.25s ease-out both;
+}
+.animate-stagger > *:nth-child(1)  { animation-delay: 0.03s; }
+.animate-stagger > *:nth-child(2)  { animation-delay: 0.06s; }
+.animate-stagger > *:nth-child(3)  { animation-delay: 0.09s; }
+.animate-stagger > *:nth-child(4)  { animation-delay: 0.12s; }
+.animate-stagger > *:nth-child(5)  { animation-delay: 0.15s; }
+.animate-stagger > *:nth-child(6)  { animation-delay: 0.18s; }
+.animate-stagger > *:nth-child(7)  { animation-delay: 0.21s; }
+.animate-stagger > *:nth-child(8)  { animation-delay: 0.24s; }
+.animate-stagger > *:nth-child(9)  { animation-delay: 0.27s; }
+.animate-stagger > *:nth-child(10) { animation-delay: 0.30s; }
+.animate-stagger > *:nth-child(11) { animation-delay: 0.33s; }
+.animate-stagger > *:nth-child(12) { animation-delay: 0.36s; }
+.animate-stagger > *:nth-child(13) { animation-delay: 0.39s; }
+.animate-stagger > *:nth-child(14) { animation-delay: 0.42s; }
+.animate-stagger > *:nth-child(15) { animation-delay: 0.45s; }
+.animate-stagger > *:nth-child(16) { animation-delay: 0.48s; }
+.animate-stagger > *:nth-child(17) { animation-delay: 0.51s; }
+.animate-stagger > *:nth-child(18) { animation-delay: 0.54s; }
+.animate-stagger > *:nth-child(19) { animation-delay: 0.57s; }
+.animate-stagger > *:nth-child(20) { animation-delay: 0.60s; }
+
+/* ─── Context menu glass ─── */
+.glass-menu {
+  background: linear-gradient(
+    160deg,
+    rgba(30, 30, 40, 0.88) 0%,
+    rgba(20, 20, 30, 0.92) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Glow dot ─── */
+@keyframes glow-breathe {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(120, 180, 255, 0.4), 0 0 8px rgba(120, 180, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 6px rgba(120, 180, 255, 0.6), 0 0 14px rgba(120, 180, 255, 0.3);
+  }
+}
+
+.glow-dot {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+/* ─── Range slider track ─── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(120, 180, 255, 0.3), rgba(255, 255, 255, 0.08));
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(180, 210, 255, 0.9), rgba(120, 180, 255, 0.8));
+  box-shadow: 0 0 6px rgba(120, 180, 255, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(120, 180, 255, 0.7), 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Utility: subtle text shadow for readability ─── */
+.text-glow {
+  text-shadow: 0 0 8px rgba(120, 180, 255, 0.3);
+}
+
+/* ─── Reorder DnD: grabbing cursor overrides all children ─── */
+body.is-sorting,
+body.is-sorting * {
+  cursor: grabbing !important;
+}

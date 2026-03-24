@@ -1,0 +1,47 @@
+# ── Dependencies ──
+node_modules
+
+# ── Build outputs ──
+dist
+dist-ssr
+src-tauri/target
+
+# ── Build artifacts (배포는 GitHub Releases 사용) ──
+*.msi
+*.exe
+*.nsis
+
+# ── Environment / Local config ──
+*.local
+.env
+.env.*
+
+# ── Claude Code 내부 파일 (개인 경로 포함) ──
+CLAUDE.md
+AGENTS.md
+NOTES.md
+.claude/
+
+# ── 내부 기획 문서 (Author 정보 포함) ──
+docs/
+
+# ── Editor / OS ──
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# ── Logs ──
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
