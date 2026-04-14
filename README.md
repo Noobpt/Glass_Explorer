@@ -2,7 +2,7 @@
 
 # GlassExplorer
 
-![version](https://img.shields.io/badge/version-0.4.4-blue)
+![version](https://img.shields.io/badge/version-0.4.6-blue)
 ![platform](https://img.shields.io/badge/platform-Windows-0078D4)
 ![tauri](https://img.shields.io/badge/Tauri-2-FFC131)
 ![react](https://img.shields.io/badge/React-19-61DAFB)
@@ -30,8 +30,8 @@ Windows용 **글래스모피즘 폴더 즐겨찾기 런처**.
 - **검색 / 필터** — `Ctrl+F`로 폴더 이름·경로 실시간 검색
 - **경로 유효성 검사** — 삭제/이동된 폴더 자동 감지 및 시각적 경고
 - **글래스모피즘 UI** — 네이티브 Win32 Acrylic Blur + CSS 반투명 다층 효과
-- **Glass 실시간 조절** — Blur / Opacity / Refraction / Depth 슬라이더
-- **Ghost 모드** — 배경 완전 제거, 폴더 목록만 표시
+- **Glass 실시간 조절** — Blur / Opacity / Refraction 슬라이더
+- **Ghost 모드 (3상태 토글)** — `off → normal → invert → off`. normal은 배경 완전 제거, invert는 추가로 흑백 팔레트 오버라이드 (흰 벽지에서 가독성 확보)
 - **항상 위 (Always-on-Top)** — Pin 버튼으로 토글
 - **자동 시작** — Windows 시작 시 자동 실행 (레지스트리 등록/해제)
 - **시스템 트레이** — Show / Hide / Quit, 더블클릭 복원

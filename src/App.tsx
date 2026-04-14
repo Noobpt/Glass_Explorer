@@ -8,7 +8,7 @@ import ControlPanel from "./components/ControlPanel";
 import DropZone from "./components/DropZone";
 import SearchBar from "./components/SearchBar";
 import type { GlassSettings } from "./components/ControlPanel";
-import type { FavoriteFolder, OpenMode } from "./types";
+import type { FavoriteFolder, GhostMode, OpenMode } from "./types";
 
 const OPEN_MODE_STORAGE_KEY = "glass-explorer.open-mode";
 
@@ -24,7 +24,7 @@ function loadStoredOpenMode(): OpenMode {
 export default function App() {
   const [folders, setFolders] = useState<FavoriteFolder[]>([]);
   const [alwaysOnTop, setAlwaysOnTop] = useState(true);
-  const [ghost, setGhost] = useState(false);
+  const [ghostMode, setGhostMode] = useState<GhostMode>("off");
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +34,6 @@ export default function App() {
     blur: 1,
     opacity: 0.6,
     refraction: 0,
-    depth: 0,
   });
   const [showSettings, setShowSettings] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -204,10 +203,20 @@ export default function App() {
   }, [glass]);
 
   const handleGhostToggle = useCallback(() => {
-    const nextValue = !ghost;
-    setGhost(nextValue);
-    void invoke("set_ghost", { enabled: nextValue });
-  }, [ghost]);
+    setGhostMode((current) => {
+      const next: GhostMode =
+        current === "off" ? "normal" : current === "normal" ? "invert" : "off";
+      void invoke("set_ghost", { enabled: next !== "off" });
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+    document.documentElement.setAttribute("data-ghost", ghostMode);
+  }, [ghostMode]);
 
   const handleAlwaysOnTopToggle = useCallback((enabled: boolean) => {
     setAlwaysOnTop(enabled);
@@ -281,7 +290,7 @@ export default function App() {
   }, []);
 
   const glassStyle = useMemo<React.CSSProperties>(() => {
-    if (ghost) {
+    if (ghostMode !== "off") {
       return {
         backgroundColor: "transparent",
         backgroundImage: "none",
@@ -293,13 +302,13 @@ export default function App() {
       backgroundColor: "rgba(10, 15, 25, 0.25)",
       backgroundImage: `linear-gradient(rgba(255,255,255,${glass.refraction}), rgba(255,255,255,${glass.refraction}))`,
       boxShadow: [
-        `0 8px 32px rgba(0, 0, 0, ${0.1 + glass.depth * 0.3})`,
-        `inset 0 1px 0 rgba(255, 255, 255, ${0.3 + glass.depth * 0.2})`,
-        `inset 0 -1px 0 rgba(255, 255, 255, ${0.05 + glass.depth * 0.05})`,
-        `inset 0 0 ${20 + glass.depth * 20}px ${10 + glass.depth * 10}px rgba(255, 255, 255, ${0.01 + glass.depth * 0.03})`,
+        "0 8px 32px rgba(0, 0, 0, 0.1)",
+        "inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+        "inset 0 -1px 0 rgba(255, 255, 255, 0.05)",
+        "inset 0 0 20px 10px rgba(255, 255, 255, 0.01)",
       ].join(", "),
     };
-  }, [glass, ghost]);
+  }, [glass, ghostMode]);
 
   const isSearching = searchQuery.trim().length > 0;
 
@@ -315,7 +324,7 @@ export default function App() {
 
   return (
     <div
-      className={`relative flex h-full flex-col overflow-hidden rounded-xl transition-all duration-300 animate-fade-in ${ghost ? "border border-transparent" : "border border-white/30"}`}
+      className={`relative flex h-full flex-col overflow-hidden rounded-xl transition-all duration-300 animate-fade-in ${ghostMode !== "off" ? "border border-transparent" : "border border-white/30"}`}
       style={glassStyle}
     >
       <div
@@ -387,7 +396,7 @@ export default function App() {
 
       <ControlPanel
         alwaysOnTop={alwaysOnTop}
-        ghost={ghost}
+        ghostMode={ghostMode}
         showSettings={showSettings}
         glass={glass}
         openMode={openMode}

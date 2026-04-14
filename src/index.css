@@ -103,7 +103,7 @@ body,
   z-index: 0;
 }
 
-/* Noise texture overlay for glass depth */
+/* Noise texture overlay for glass surface */
 .liquid-glass::after {
   content: "";
   position: absolute;
@@ -244,4 +244,156 @@ input[type="range"]::-webkit-slider-thumb:hover {
 body.is-sorting,
 body.is-sorting * {
   cursor: grabbing !important;
+}
+
+/* ─── Ghost mode: Invert (흑백 팔레트, 흰 벽지 전제) ───
+   [data-ghost="invert"] 는 <html>에 설정됨. 하드코딩된 Tailwind 색을
+   후손 셀렉터로 덮어쓴다. 로고의 파란 glow-dot 만 예외. */
+
+html[data-ghost="invert"] {
+  color-scheme: light;
+  color: #0a0a0a;
+  text-shadow: none;
+}
+
+[data-ghost="invert"],
+[data-ghost="invert"] * {
+  text-shadow: none !important;
+}
+
+[data-ghost="invert"] *,
+[data-ghost="invert"] *::before,
+[data-ghost="invert"] *::after {
+  box-shadow: none !important;
+}
+
+/* 기본 텍스트 계층 (text-white/*) */
+[data-ghost="invert"] [class*="text-white/"] {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+[data-ghost="invert"] [class~="text-white/60"],
+[data-ghost="invert"] [class~="text-white/65"],
+[data-ghost="invert"] [class~="text-white/70"],
+[data-ghost="invert"] [class~="text-white/75"],
+[data-ghost="invert"] [class~="text-white/80"],
+[data-ghost="invert"] [class~="text-white/85"],
+[data-ghost="invert"] [class~="text-white/90"],
+[data-ghost="invert"] [class~="text-white/95"] {
+  color: #0a0a0a !important;
+}
+[data-ghost="invert"] [class~="text-white/25"],
+[data-ghost="invert"] [class~="text-white/22"],
+[data-ghost="invert"] [class~="text-white/20"],
+[data-ghost="invert"] [class~="text-white/15"],
+[data-ghost="invert"] [class~="text-white/10"] {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* hover / group-hover 텍스트 */
+[data-ghost="invert"] [class*="hover:text-white/"]:hover {
+  color: #0a0a0a !important;
+}
+[data-ghost="invert"] .group:hover [class*="group-hover:text-white"] {
+  color: #0a0a0a !important;
+}
+
+/* accent 텍스트 (glow-dot 제외) → 검정 */
+[data-ghost="invert"] [class*="text-accent"] {
+  color: #0a0a0a !important;
+}
+
+/* red-400 (remove/close) → 검정 */
+[data-ghost="invert"] [class*="text-red-400"] {
+  color: #0a0a0a !important;
+}
+[data-ghost="invert"] [class*="hover:text-red-400"]:hover {
+  color: #0a0a0a !important;
+}
+
+/* placeholder */
+[data-ghost="invert"] input::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 영구 버튼 배경 (bg-white/*, bg-glass-*) → 옅은 검정 */
+[data-ghost="invert"] [class*="bg-white/"],
+[data-ghost="invert"] [class~="bg-glass-bg"],
+[data-ghost="invert"] [class~="bg-glass-surface"] {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* hover 배경 */
+[data-ghost="invert"] [class*="hover:bg-white/"]:hover,
+[data-ghost="invert"] [class~="hover:bg-glass-hover"]:hover {
+  background-color: rgba(0, 0, 0, 0.10) !important;
+}
+
+/* active 배경 */
+[data-ghost="invert"] [class*="active:bg-white/"]:active,
+[data-ghost="invert"] [class~="active:bg-glass-active"]:active,
+[data-ghost="invert"] [class~="bg-glass-active"] {
+  background-color: rgba(0, 0, 0, 0.14) !important;
+}
+
+/* accent 배경 (활성 버튼 강조) */
+[data-ghost="invert"] [class*="bg-accent"] {
+  background-color: rgba(0, 0, 0, 0.14) !important;
+}
+
+/* red-400 배경 */
+[data-ghost="invert"] [class*="bg-red-400"],
+[data-ghost="invert"] [class*="hover:bg-red-400"]:hover {
+  background-color: rgba(0, 0, 0, 0.10) !important;
+}
+
+/* 테두리 */
+[data-ghost="invert"] [class*="border-white/"],
+[data-ghost="invert"] [class~="border-glass-border"] {
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+[data-ghost="invert"] [class*="border-accent"] {
+  border-color: rgba(0, 0, 0, 0.35) !important;
+}
+[data-ghost="invert"] [class*="border-red-400"] {
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+[data-ghost="invert"] [class*="focus-within:border-accent"]:focus-within {
+  border-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* FolderItem 폴더 아이콘 (fill currentColor → outline stroke) */
+[data-ghost="invert"] svg[viewBox="0 0 20 20"] {
+  color: transparent !important;
+}
+[data-ghost="invert"] svg[viewBox="0 0 20 20"] path {
+  fill: none !important;
+  stroke: #0a0a0a !important;
+  stroke-width: 1.5 !important;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Range 슬라이더 — 검정 팔레트 */
+[data-ghost="invert"] input[type="range"] {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.08)) !important;
+}
+[data-ghost="invert"] input[type="range"]::-webkit-slider-thumb {
+  background: radial-gradient(circle at 40% 35%, rgba(30, 30, 30, 0.95), rgba(10, 10, 10, 0.9)) !important;
+  border: 1px solid rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 컨텍스트 메뉴: 어두운 glass → 밝은 glass */
+[data-ghost="invert"] .glass-menu {
+  background: linear-gradient(
+    160deg,
+    rgba(250, 250, 252, 0.95) 0%,
+    rgba(238, 238, 242, 0.96) 100%
+  ) !important;
+  border: 1px solid rgba(0, 0, 0, 0.18) !important;
+}
+
+/* 로고 파란 점 — 유일한 파란색 예외 */
+[data-ghost="invert"] .glow-dot {
+  background: rgba(120, 180, 255, 0.95) !important;
+  animation: none;
 }

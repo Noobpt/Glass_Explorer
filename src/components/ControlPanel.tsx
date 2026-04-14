@@ -1,15 +1,14 @@
-import type { OpenMode } from "../types";
+import type { GhostMode, OpenMode } from "../types";
 
 interface GlassSettings {
   blur: number;
   opacity: number;
   refraction: number;
-  depth: number;
 }
 
 interface Props {
   alwaysOnTop: boolean;
-  ghost: boolean;
+  ghostMode: GhostMode;
   showSettings: boolean;
   glass: GlassSettings;
   openMode: OpenMode;
@@ -81,7 +80,7 @@ function ModeButton({
 
 export default function ControlPanel({
   alwaysOnTop,
-  ghost,
+  ghostMode,
   showSettings,
   glass,
   openMode,
@@ -175,14 +174,6 @@ export default function ControlPanel({
             step={0.05}
             onChange={(value) => onGlassChange({ ...glass, refraction: value })}
           />
-          <MiniSlider
-            label="Depth"
-            value={glass.depth}
-            min={0}
-            max={1}
-            step={0.05}
-            onChange={(value) => onGlassChange({ ...glass, depth: value })}
-          />
         </>
       )}
 
@@ -218,11 +209,13 @@ export default function ControlPanel({
           <button
             onClick={onGhostToggle}
             className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[10px] font-medium transition-all duration-200 ${
-              ghost
-                ? "border border-accent/25 bg-accent/15 text-accent shadow-[0_0_8px_rgba(120,180,255,0.12)]"
-                : "border border-white/[0.06] bg-white/[0.03] text-white/35 hover:bg-white/[0.05] hover:text-white/50"
+              ghostMode === "invert"
+                ? "border border-accent/45 bg-accent/25 text-accent shadow-[0_0_10px_rgba(120,180,255,0.18)]"
+                : ghostMode === "normal"
+                  ? "border border-accent/25 bg-accent/15 text-accent shadow-[0_0_8px_rgba(120,180,255,0.12)]"
+                  : "border border-white/[0.06] bg-white/[0.03] text-white/35 hover:bg-white/[0.05] hover:text-white/50"
             }`}
-            title="Ghost mode"
+            title={`Ghost mode: ${ghostMode}`}
           >
             <svg
               className="h-3 w-3"
@@ -231,9 +224,15 @@ export default function ControlPanel({
               stroke="currentColor"
               strokeWidth="1.4"
               strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <circle cx="8" cy="8" r="5" />
-              <circle cx="8" cy="8" r="2" />
+              {ghostMode === "normal" && (
+                <path d="M8 3 A5 5 0 0 1 8 13 Z" fill="currentColor" stroke="none" />
+              )}
+              {ghostMode === "invert" && (
+                <circle cx="8" cy="8" r="5" fill="currentColor" stroke="none" />
+              )}
             </svg>
             Ghost
           </button>
